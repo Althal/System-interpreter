@@ -1,8 +1,6 @@
 ﻿
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sysos.FileSystem;
-import sysos.Memory;
 
 public class Interpreter {
     protected Memory memory;
