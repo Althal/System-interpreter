@@ -48,7 +48,7 @@ public class Interpreter {
         System.out.println("Counter: " + counter);
     }
     
-    private String getOrder(Memory m, PCB pcb){
+    private String getOrder(Memory m){
         String order = m.czytaj(counter);
         counter += (order.length()+1);
         return order;
@@ -57,14 +57,14 @@ public class Interpreter {
     public void execute(Memory m, PCB pcb, HardDrive hardDrive){
         getRegistersFromPCB(pcb);
         
-        String order = getOrder(m, pcb);
+        String order = getOrder(m);
         System.out.println("Order: " + order);
         
         //DODAWANIE (REJESTR, WARTOSC)
         //DODAWANIE (REJESTR, ADRES)
         if("ADD".equals(order)){
-            String arg1 = getOrder(m, pcb); //rejestr
-            String arg2 = getOrder(m, pcb); //wartoœæ
+            String arg1 = getOrder(m); //rejestr
+            String arg2 = getOrder(m); //wartoœæ
             System.out.println("Args: " + arg1 + " " + arg2);
             
             int value;
@@ -93,8 +93,8 @@ public class Interpreter {
         //ODEJMOWANIE (REJESTR, WARTOSC)
         //ODEJMOWANIE (REJESTR, ADRES)
         else if("SUB".equals(order)){
-            String arg1 = getOrder(m, pcb); //rejestr
-            String arg2 = getOrder(m, pcb); //wartoœæ
+            String arg1 = getOrder(m); //rejestr
+            String arg2 = getOrder(m); //wartoœæ
             System.out.println("Args: " + arg1 + " " + arg2);
             
             int value;
@@ -123,8 +123,8 @@ public class Interpreter {
         //MNOZENIE (REJESTR, WARTOSC)
         //MNOZENIE (REJESTR, ADRES)
         else if("MUL".equals(order)){
-            String arg1 = getOrder(m, pcb); //rejestr
-            String arg2 = getOrder(m, pcb); //wartoœæ
+            String arg1 = getOrder(m); //rejestr
+            String arg2 = getOrder(m); //wartoœæ
             System.out.println("Args: " + arg1 + " " + arg2);
             
             int value;
@@ -153,8 +153,8 @@ public class Interpreter {
         //DZIELENIE (REJESTR, WARTOSC)
         //DZIELENIE (REJESTR, ADRES)
         else if("DIV".equals(order)){
-            String arg1 = getOrder(m, pcb); //rejestr
-            String arg2 = getOrder(m, pcb); //wartoœæ
+            String arg1 = getOrder(m); //rejestr
+            String arg2 = getOrder(m); //wartoœæ
             System.out.println("Args: " + arg1 + " " + arg2);
             
             int value;
@@ -182,9 +182,9 @@ public class Interpreter {
         
         //MODULO (REJESTR WYNIKU, REJESTR DZIELNA, REJESTR DZIELNIK)
         else if("MOD".equals(order)){
-            String arg1 = getOrder(m, pcb); //rejestr wyniku
-            String arg2 = getOrder(m, pcb); //rejestr dzielna
-            String arg3 = getOrder(m, pcb); //rejestr dzielnik
+            String arg1 = getOrder(m); //rejestr wyniku
+            String arg2 = getOrder(m); //rejestr dzielna
+            String arg3 = getOrder(m); //rejestr dzielnik
             System.out.println("Args: " + arg1 + " " + arg2 + " " + arg3);
             
             int base = 0;
@@ -222,8 +222,8 @@ public class Interpreter {
         //ZAPIS DO REJESTRU (REJESTR, WARTOSC)
         //ZAPIS DO REJESTRU (REJESTR, PAMIEC)
         else if("MOV".equals(order)){
-            String arg1 = getOrder(m, pcb); //rejestr
-            String arg2 = getOrder(m, pcb); //wartoœæ
+            String arg1 = getOrder(m); //rejestr
+            String arg2 = getOrder(m); //wartoœæ
             System.out.println("Args: " + arg1 + " " + arg2);
             
             int value;
@@ -260,7 +260,7 @@ public class Interpreter {
         
         //INKREMENTACJA (REJESTR)
         else if("INC".equals(order)){
-            String arg1 = getOrder(m, pcb); //rejestr
+            String arg1 = getOrder(m); //rejestr
             System.out.println("Args: " + arg1);
             
             if("A".equals(arg1)) A++;
@@ -276,7 +276,7 @@ public class Interpreter {
         
         //DEKREMENTACJA (REJESTR)
         else if("DEC".equals(order)){
-            String arg1 = getOrder(m, pcb); //rejestr
+            String arg1 = getOrder(m); //rejestr
             System.out.println("Args: " + arg1);
             
             if("A".equals(arg1)) A--;
@@ -292,8 +292,8 @@ public class Interpreter {
         
         //ZAPIS DO PAMIECI (MIEJSCE, ZNAK)
         else if("MWR".equals(order)){
-            String arg1 = getOrder(m, pcb); //miejsce (moze byc [x] moze byc samo x)
-            String arg2 = getOrder(m, pcb); //znak
+            String arg1 = getOrder(m); //miejsce (moze byc [x] moze byc samo x)
+            String arg2 = getOrder(m); //znak
             System.out.println("Args: " + arg1 + " " + arg2);
             
             if(arg1.charAt(0)=='['){
@@ -307,7 +307,7 @@ public class Interpreter {
         }
         
         else if("BOO".equals(order)){
-            String arg1 = getOrder(m, pcb); //rejestr
+            String arg1 = getOrder(m); //rejestr
             System.out.println("Args: " + arg1);
             
             int value = 0;
@@ -327,7 +327,7 @@ public class Interpreter {
         
         //SKOK DO (ADRES)
         else if("JP".equals(order)){
-            String arg1 = getOrder(m, pcb); //adres
+            String arg1 = getOrder(m); //adres
             System.out.println("Args: " + arg1);
             
             this.counter = Integer.parseInt(arg1);
@@ -337,8 +337,8 @@ public class Interpreter {
         
         //SKOK DO JEZELI NIE ZERO (REJESTR, ADRES)
         else if("JNZ".equals(order)){
-            String arg1 = getOrder(m, pcb); //rejestr
-            String arg2 = getOrder(m, pcb); //adres
+            String arg1 = getOrder(m); //rejestr
+            String arg2 = getOrder(m); //adres
             System.out.println("Args: " + arg1 + " " + arg2);
             
             boolean isZero = false;
@@ -375,7 +375,7 @@ public class Interpreter {
         
         //STWORZ PLIK (NAZWA)
         else if("CF".equals(order)){
-            String arg1 = getOrder(m, pcb); //nazwa
+            String arg1 = getOrder(m); //nazwa
             System.out.println("Args: " + arg1);
             
             hardDrive.CreateFile(arg1);
@@ -384,17 +384,17 @@ public class Interpreter {
         
         //STWORZ PLIK Z DANYMI (NAZWA, DANE)
         else if("CFD".equals(order)){
-            String arg1 = getOrder(m, pcb); //nazwa
-            String arg2 = getOrder(m, pcb); //dane
+            String arg1 = getOrder(m); //nazwa
+            String arg2 = getOrder(m); //dane
             System.out.println("Args: " + arg1 + " " + arg2);
             
             hardDrive.CreateFile(arg1,arg2);
             saveCounterToPCB(pcb);
         }
-        
+       
         //OTWORZ PLIK (NAZWA)
         else if("OF".equals(order)){
-            String arg1 = getOrder(m, pcb); //nazwa
+            String arg1 = getOrder(m); //nazwa
             System.out.println("Args: " + arg1);
             
             hardDrive.OpenFile(arg1);
@@ -403,7 +403,7 @@ public class Interpreter {
         
         //ZAMKNIJ PLIK (NAZWA)
         else if("EF".equals(order)){
-            String arg1 = getOrder(m, pcb); //nazwa
+            String arg1 = getOrder(m); //nazwa
             System.out.println("Args: " + arg1);
             
             hardDrive.CloseFile(arg1);
@@ -412,37 +412,28 @@ public class Interpreter {
         
         //USUÑ PLIK (NAZWA)
         else if("DF".equals(order)){
-            String arg1 = getOrder(m, pcb); //nazwa
+            String arg1 = getOrder(m); //nazwa
             System.out.println("Args: " + arg1);
             
             hardDrive.DeleteFile(arg1);
             saveCounterToPCB(pcb);
-        }
-        
-        //NAPISZ DO PLIKU (NAZWA, DANE)
-        else if("WF".equals(order)){
-            String arg1 = getOrder(m, pcb); //nazwa
-            String arg2 = getOrder(m, pcb); //dane
-            System.out.println("Args: " + arg1 + " " + arg2);
-            
-            //TODO
-            //hardDrive.WriteFile(arg1,arg2);
-            saveCounterToPCB(pcb);
-        }
+        }       
         
         //EDYTUJ PLIK (NAZWA, DANE)
         else if("ED".equals(order)){
-            String arg1 = getOrder(m, pcb); //nazwa
-            String arg2 = getOrder(m, pcb); //dane
+            String arg1 = getOrder(m); //nazwa
+            String arg2 = getOrder(m); //dane
             System.out.println("Args: " + arg1 + " " + arg2);
             
+            System.out.println(pcb.wskaznik);
             hardDrive.EditFile(arg1,arg2);
             saveCounterToPCB(pcb);
+            System.out.println(pcb.wskaznik);
         }
         
         //CZYTAJ PLIK (NAZWA)
         else if("RF".equals(order)){
-            String arg1 = getOrder(m, pcb); //nazwa
+            String arg1 = getOrder(m); //nazwa
             System.out.println("Args: " + arg1);
             
             hardDrive.ReadFile(arg1);
@@ -451,8 +442,8 @@ public class Interpreter {
         
         //ZMIEN NAZWE PLIKU (NAZWA PRZED, NAZWA PO)
         else if("RNF".equals(order)){
-            String arg1 = getOrder(m, pcb); //nazwa
-            String arg2 = getOrder(m, pcb); //nazwa
+            String arg1 = getOrder(m); //nazwa
+            String arg2 = getOrder(m); //nazwa
             System.out.println("Args: " + arg1 + " " + arg2);
             
             hardDrive.Rename(arg1,arg2);
@@ -467,7 +458,7 @@ public class Interpreter {
         
         //POKAZ INFO (NAZWA)
         else if("DI".equals(order)){
-            String arg1 = getOrder(m, pcb); //nazwa
+            String arg1 = getOrder(m); //nazwa
             System.out.println("Args: " + arg1);
             
             hardDrive.GetDataToShow(arg1);
@@ -482,7 +473,7 @@ public class Interpreter {
         
         //POKAZ DRZEWO PROCESOW
         else if("XT".equals(order)){
-            String arg1 = getOrder(m, pcb); //nazwa
+            String arg1 = getOrder(m); //nazwa
             System.out.println("Args: " + arg1);
             
             ProcessManager.rysujDrzewo(arg1);
@@ -494,8 +485,8 @@ public class Interpreter {
         else if("CP".equals(order)){
             PCB p = new PCB(0, "INIT");
             
-            String arg1 = getOrder(m, pcb); //plik
-            String arg2 = getOrder(m, pcb); //nazwa
+            String arg1 = getOrder(m); //plik
+            String arg2 = getOrder(m); //nazwa
             System.out.println("Args: " + arg1 + " " + arg2);
             
             try {
@@ -522,9 +513,9 @@ public class Interpreter {
         
         //IF (REJESTR, WARTOSC, SKOK PRZY FALSZU)
         else if("IF".equals(order)){
-            String arg1 = getOrder(m, pcb); //rejestr
-            String arg2 = getOrder(m, pcb); //wartosc
-            String arg3 = getOrder(m, pcb); //skok przy false
+            String arg1 = getOrder(m); //rejestr
+            String arg2 = getOrder(m); //wartosc
+            String arg3 = getOrder(m); //skok przy false
             System.out.println("Args: " + arg1 + " " + arg2 + " " + arg3);
             
             int value = 0;
@@ -541,6 +532,54 @@ public class Interpreter {
             if(value != value2) this.counter += jump;
             
             saveCounterToPCB(pcb); 
+        }
+
+        
+        //NEXT INT (REJESTR ZAPISU, REJESTR ODCZYTU, NAZWAA PLIKU)
+        else if("NI".equals(order)){
+            String arg1 = getOrder(m); //rejestr zapisu
+            String arg2 = getOrder(m); //rejestr liczby
+            String arg3 = getOrder(m); //nazwa pliku
+            
+            System.out.println("Args: " + arg1 + " " + arg2 + " " + arg3);
+            
+            int val = 0;
+            if("A".equals(arg2)) val = A;
+            else if("B".equals(arg2)) val = B;
+            else if("C".equals(arg2)) val = C;
+            else if("D".equals(arg2)) val = D;
+            else if("E".equals(arg2)) val = E;
+            else if("F".equals(arg2)) val = F;
+            
+            int value = hardDrive.nextIntFromFile(arg3,val);
+            
+            if("A".equals(arg1)) A=value;
+            else if("B".equals(arg1)) B=value;
+            else if("C".equals(arg1)) C=value;
+            else if("D".equals(arg1)) D=value;
+            else if("E".equals(arg1)) E=value;
+            else if("F".equals(arg1)) F=value;
+
+            saveRegistersToPCB(pcb); 
+        }
+        
+        //WYSWIETLA ODPOWIEDZ ZADANIA 2
+        else if("ANS".equals(order)){
+            String arg1 = getOrder(m); //rejestr
+            System.out.println("Args: " + arg1);
+            
+            int value = 0;
+            
+            if("A".equals(arg1)) value = A;
+            else if("B".equals(arg1)) value = B;
+            else if("C".equals(arg1)) value = C;
+            else if("D".equals(arg1)) value = D;
+            else if("E".equals(arg1)) value = E;
+            else if("F".equals(arg1)) value = F;
+            
+            System.out.println("Answer: " + value);
+                
+            saveCounterToPCB(pcb);
         }
         
         else{
